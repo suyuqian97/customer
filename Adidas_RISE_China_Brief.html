@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adidas China ERP Strategy | RISE with SAP</title>
+<style>
+  :root {
+    --sap-blue: #0070F2;
+    --sap-dark: #223548;
+    --sap-gold: #F0AB00;
+    --sap-green: #30914C;
+    --sap-red: #BB0000;
+    --sap-grey: #556B82;
+    --sap-light: #F5F6F7;
+    --sap-border: #D9E0E7;
+    --sap-text: #1D2D3E;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: '72', 'SAP72', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    background: #EBF0F5;
+    color: var(--sap-text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--sap-dark);
+    color: white;
+    padding: 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .sap-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sap-logo-box {
+    background: var(--sap-blue);
+    color: white;
+    font-weight: 800;
+    font-size: 18px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+  }
+  .sap-logo-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 400;
+  }
+  .header-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+  }
+  .header-hero {
+    padding: 36px 40px 30px;
+    background: linear-gradient(135deg, #1a3a5c 0%, #0d2137 100%);
+  }
+  .header-tag {
+    display: inline-block;
+    background: var(--sap-blue);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    background: white;
+    border-bottom: 2px solid var(--sap-border);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sap-grey);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--sap-blue); }
+  .nav-tab.active {
+    color: var(--sap-blue);
+    border-bottom-color: var(--sap-blue);
+  }
+
+  /* ── MAIN ── */
+  .main { padding: 32px 40px; max-width: 1200px; margin: 0 auto; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: white;
+    border-radius: 6px;
+    border: 1px solid var(--sap-border);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sap-dark);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--sap-blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .num {
+    background: var(--sap-blue);
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  @media(max-width:900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* ── STATUS BADGES ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-blue { background: #EBF4FF; color: var(--sap-blue); }
+  .badge-green { background: #E8F5EC; color: var(--sap-green); }
+  .badge-gold { background: #FFF8E6; color: #9A6800; }
+  .badge-red { background: #FFEBEB; color: var(--sap-red); }
+  .badge-grey { background: #F0F2F4; color: var(--sap-grey); }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .highlight-box {
+    background: #EBF4FF;
+    border-left: 4px solid var(--sap-blue);
+    padding: 14px 18px;
+    border-radius: 0 4px 4px 0;
+    margin: 16px 0;
+  }
+  .highlight-box.gold {
+    background: #FFF8E6;
+    border-left-color: var(--sap-gold);
+  }
+  .highlight-box.green {
+    background: #E8F5EC;
+    border-left-color: var(--sap-green);
+  }
+  .highlight-box.red {
+    background: #FFEBEB;
+    border-left-color: var(--sap-red);
+  }
+  .highlight-box p { font-size: 13px; line-height: 1.7; }
+  .highlight-box strong { color: var(--sap-dark); }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .arch-diagram {
+    background: var(--sap-light);
+    border: 1px solid var(--sap-border);
+    border-radius: 6px;
+    padding: 24px;
+    margin: 16px 0;
+    position: relative;
+  }
+  .arch-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+  }
+  .arch-box {
+    background: white;
+    border: 2px solid var(--sap-blue);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 130px;
+    color: var(--sap-dark);
+    box-shadow: 0 2px 6px rgba(0,112,242,0.1);
+  }
+  .arch-box.orange {
+    border-color: #E86600;
+    color: #E86600;
+  }
+  .arch-box.green {
+    border-color: var(--sap-green);
+    color: var(--sap-green);
+  }
+  .arch-box.grey {
+    border-color: var(--sap-grey);
+    color: var(--sap-grey);
+    background: #F8FAFB;
+  }
+  .arch-box.gold {
+    border-color: var(--sap-gold);
+    color: #9A6800;
+    background: #FFFBF0;
+  }
+  .arch-arrow {
+    font-size: 18px;
+    color: var(--sap-grey);
+    flex-shrink: 0;
+  }
+  .arch-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--sap-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .arch-section {
+    background: white;
+    border: 1px solid var(--sap-border);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 10px 0;
+  }
+  .arch-line {
+    border-top: 1px dashed var(--sap-border);
+    margin: 14px 0;
+  }
+
+  /* ── STEP LIST ── */
+  .step-list { counter-reset: steps; list-style: none; }
+  .step-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .step-list li::before {
+    content: counter(steps);
+    background: var(--sap-blue);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-list li .step-content strong {
+    display: block;
+    font-size: 13px;
+    color: var(--sap-dark);
+    margin-bottom: 3px;
+  }
+  .step-list li .step-content p {
+    font-size: 12px;
+    color: var(--sap-grey);
+  }
+
+  /* ── BULLET LIST ── */
+  .bullet-list { list-style: none; padding: 0; }
+  .bullet-list li {
+    display: flex;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--sap-border);
+    font-size: 13px;
+    align-items: flex-start;
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before {
+    content: '▸';
+    color: var(--sap-blue);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── TABLE ── */
+  .sap-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  .sap-table th {
+    background: var(--sap-dark);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .sap-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--sap-border);
+    vertical-align: top;
+  }
+  .sap-table tr:nth-child(even) td { background: var(--sap-light); }
+  .sap-table tr:hover td { background: #EBF4FF; }
+
+  /* ── OPTION CARDS ── */
+  .option-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:700px) { .option-cards { grid-template-columns: 1fr; } }
+  .option-card {
+    border: 1px solid var(--sap-border);
+    border-radius: 6px;
+    padding: 18px;
+    position: relative;
+  }
+  .option-card.recommended {
+    border-color: var(--sap-blue);
+    box-shadow: 0 0 0 2px rgba(0,112,242,0.15);
+  }
+  .rec-badge {
+    position: absolute;
+    top: -10px;
+    right: 14px;
+    background: var(--sap-blue);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+  }
+  .option-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--sap-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .option-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sap-dark);
+    margin-bottom: 10px;
+  }
+  .option-items { list-style: none; }
+  .option-items li {
+    font-size: 12px;
+    color: var(--sap-grey);
+    padding: 3px 0;
+    display: flex;
+    gap: 7px;
+  }
+  .option-items li.pro::before { content: '✓'; color: var(--sap-green); font-weight: 700; }
+  .option-items li.con::before { content: '✗'; color: var(--sap-red); font-weight: 700; }
+
+  /* ── STAT BOXES ── */
+  .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+  @media(max-width:800px) { .stat-row { grid-template-columns: 1fr 1fr; } }
+  .stat-box {
+    background: white;
+    border: 1px solid var(--sap-border);
+    border-radius: 6px;
+    padding: 18px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--sap-blue);
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--sap-grey);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ── CASE STUDY ── */
+  .case-card {
+    background: white;
+    border: 1px solid var(--sap-border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .case-header {
+    background: linear-gradient(135deg, #1a3a5c, #0d2137);
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .case-header-title { font-size: 14px; font-weight: 700; }
+  .case-header-sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 3px; }
+  .case-body { padding: 20px; }
+
+  /* ── PHASE TIMELINE ── */
+  .phase-row { display: flex; gap: 0; margin: 16px 0; }
+  .phase-item {
+    flex: 1;
+    background: var(--sap-light);
+    border: 1px solid var(--sap-border);
+    padding: 14px;
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%);
+    margin-right: 4px;
+    text-align: center;
+  }
+  .phase-item:first-child {
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+  }
+  .phase-item:last-child {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 16px 50%);
+    margin-right: 0;
+  }
+  .phase-item.active { background: var(--sap-blue); color: white; }
+  .phase-num { font-size: 10px; font-weight: 700; opacity: 0.7; }
+  .phase-title { font-size: 12px; font-weight: 700; margin: 3px 0; }
+  .phase-time { font-size: 10px; opacity: 0.7; }
+
+  /* ── INTEGRATION MATRIX ── */
+  .int-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+  @media(max-width:700px) { .int-grid { grid-template-columns: 1fr; } }
+  .int-item {
+    background: var(--sap-light);
+    border: 1px solid var(--sap-border);
+    border-radius: 4px;
+    padding: 14px;
+  }
+  .int-item-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--sap-dark);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .int-item-title .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-blue { background: var(--sap-blue); }
+  .dot-green { background: var(--sap-green); }
+  .dot-gold { background: var(--sap-gold); }
+  .int-item p { font-size: 11.5px; color: var(--sap-grey); line-height: 1.6; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--sap-dark);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 18px;
+    font-size: 11px;
+    margin-top: 40px;
+  }
+  .footer strong { color: white; }
+
+  /* ── MISC ── */
+  .section-intro {
+    font-size: 13.5px;
+    color: var(--sap-grey);
+    line-height: 1.7;
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    background: white;
+    border-radius: 6px;
+    border-left: 4px solid var(--sap-blue);
+  }
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  hr.divider { border: none; border-top: 1px solid var(--sap-border); margin: 20px 0; }
+  .text-blue { color: var(--sap-blue); }
+  .text-sm { font-size: 12px; color: var(--sap-grey); }
+  .mt-12 { margin-top: 12px; }
+  .mb-8 { margin-bottom: 8px; }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="sap-logo">
+      <div class="sap-logo-box">SAP</div>
+      <div class="sap-logo-text">Premium Engagement APAC</div>
+    </div>
+    <div class="header-meta">SAP &amp; Customer Confidential｜Jan 2026</div>
+  </div>
+  <div class="header-hero">
+    <div class="header-tag">China Instance Strategy</div>
+    <div class="header-title">RISE with SAP 中国落地策略<br>Adidas China ERP Modernization</div>
+    <div class="header-sub">长期方案：RISE with SAP 中国本地实例 + 2-Tier 架构 | 当前处于商用系统换代过渡期（2–3年）</div>
+    <div class="tag-row">
+      <span class="badge badge-blue">RISE with SAP</span>
+      <span class="badge badge-gold">2-Tier ERP</span>
+      <span class="badge badge-green">零售 / WMS / OMS 集成</span>
+      <span class="badge badge-grey">MNC China Instance</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showTab('overview')">📋 整体概览</div>
+  <div class="nav-tab" onclick="showTab('rise')">🏗 RISE 落地架构</div>
+  <div class="nav-tab" onclick="showTab('scope')">🔍 改造范围评估</div>
+  <div class="nav-tab" onclick="showTab('integration')">🔗 周边系统集成</div>
+  <div class="nav-tab" onclick="showTab('cases')">📁 2-Tier 中国案例</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ══════════════ TAB 1: 整体概览 ══════════════ -->
+  <div id="tab-overview" class="section active">
+
+    <div class="section-intro">
+      本文件针对 Adidas China 的两个核心议题：① RISE with SAP 中国本地实例 + 2-Tier 架构的落地可行性与实施范围；② 处于换代过渡期的零售 / WMS / OMS 商用配套系统如何与 S/4HANA 完成集成对接。
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">77%</div>
+        <div class="stat-label">SAP MNC 客户认为数据主权与属地化非常重要</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">50%</div>
+        <div class="stat-label">SAP MNC 客户正在评估中国独立 ERP 实例</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">9个月</div>
+        <div class="stat-label">典型中国 S/4HANA 实例分离所需最短周期</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">30–70%</div>
+        <div class="stat-label">独立实例后系统运营成本增幅区间</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="num">1</span>为什么 MNC 需要中国独立实例</div>
+        <ul class="bullet-list">
+          <li><strong>跨境数据限制：</strong>《数据安全法》《个人信息保护法》要求敏感数据本地存储，跨境传输受严格管控</li>
+          <li><strong>本地化合规要求：</strong>政府指引要求采用本地化基础设施及经认证的云服务商</li>
+          <li><strong>地缘政治风险：</strong>全球单一实例在极端场景下面临断连风险，需具备独立运营能力</li>
+          <li><strong>中国业务体量：</strong>消费品行业中国营收占比约 20%，鞋服/零售行业可高达 74%</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="num">2</span>Adidas 当前现状与长期方案</div>
+        <div class="highlight-box gold">
+          <p><strong>现状：</strong>零售、WMS、OMS 等商用配套系统正在换代，当前全部对接旧 ECC，整体换代周期 2–3 年，处于系统过渡期。全球单实例方案不在考虑范围内。</p>
+        </div>
+        <div class="highlight-box green">
+          <p><strong>长期落地方案：</strong>RISE with SAP 中国本地实例（Local Instance）+ 两层架构（2-Tier）；ERP + BTP 一体化部署；数据二层同步回 Global。不会采用全球单实例方案。</p>
+        </div>
+        <div class="highlight-box">
+          <p><strong>核心议题：</strong>① RISE 在国内实际落地效果与整体实施可行性，以及落地所需改造范围；② 处于换代过渡期的周边商业系统（零售 / WMS / OMS）与 S/4HANA 的集成方案。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="num">3</span>四种主流实例策略对比（MNC 常见选择）</div>
+      <table class="sap-table">
+        <thead>
+          <tr>
+            <th>策略选项</th>
+            <th>架构模式</th>
+            <th>典型客户</th>
+            <th>合规风险</th>
+            <th>成本</th>
+            <th>推荐度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Option 1</strong><br>全球统一实例</td>
+            <td>单一全球 S/4HANA，中国在全球实例内</td>
+            <td>AstraZeneca, MSD, Lilly</td>
+            <td><span class="badge badge-red">高风险</span></td>
+            <td><span class="badge badge-green">最低</span></td>
+            <td>⚠️ 不推荐</td>
+          </tr>
+          <tr>
+            <td><strong>Option 2</strong><br>中国独立实例（强耦合）</td>
+            <td>全球 ECC/S/4 + 中国 RISE 实例，强集成</td>
+            <td>Nestlé, L'Oreal, Siemens</td>
+            <td><span class="badge badge-gold">中等</span></td>
+            <td><span class="badge badge-gold">较高</span></td>
+            <td>✅ 推荐</td>
+          </tr>
+          <tr>
+            <td><strong>Option 3</strong><br>中国独立实例（松耦合）</td>
+            <td>全球 ECC/S/4 + 中国 RISE，松散集成</td>
+            <td>Bosch, Hitachi</td>
+            <td><span class="badge badge-green">低风险</span></td>
+            <td><span class="badge badge-gold">较高</span></td>
+            <td>✅ 推荐（Adidas 适用）</td>
+          </tr>
+          <tr>
+            <td><strong>Option 4</strong><br>完全独立本地 ERP</td>
+            <td>与全球完全断连的本地 ERP 系统</td>
+            <td>Samsung, Apple, Shell</td>
+            <td><span class="badge badge-green">极低</span></td>
+            <td><span class="badge badge-red">最高</span></td>
+            <td>❌ 非 SAP 路线</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ TAB 2: RISE 落地架构 ══════════════ -->
+  <div id="tab-rise" class="section">
+
+    <div class="section-intro">
+      SAP RISE with SAP 在中国提供完整的本地化部署选项，遵循"In China, For China"原则，数据存储于境内数据中心，满足监管合规要求。
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="num">1</span>RISE with SAP 中国标准落地架构图</div>
+
+      <div class="arch-diagram">
+        <span class="arch-label">全球层 Global Layer</span>
+        <div class="arch-section">
+          <div class="arch-row">
+            <div class="arch-box">Global ECC / S/4HANA<br><span style="font-size:10px;font-weight:400">全球核心 Finance / SCM</span></div>
+            <div class="arch-arrow">⟷</div>
+            <div class="arch-box grey">Global MDM<br><span style="font-size:10px;font-weight:400">主数据管理</span></div>
+            <div class="arch-arrow">⟷</div>
+            <div class="arch-box grey">Global Integration<br><span style="font-size:10px;font-weight:400">SAP BTP / CPI</span></div>
+          </div>
+        </div>
+
+        <div class="arch-row" style="justify-content:center;margin:8px 0">
+          <div style="text-align:center;color:var(--sap-grey);font-size:12px">
+            ↕ 松耦合集成（仅同步非敏感数据）<br>
+            <span style="font-size:10px">财务汇总 / 跨公司 PO / 主数据同步</span>
+          </div>
+        </div>
+
+        <span class="arch-label" style="margin-top:12px;display:block">中国层 China Layer — 境内数据中心</span>
+        <div class="arch-section" style="border-color:var(--sap-blue)">
+          <div class="arch-row">
+            <div class="arch-box" style="border-color:#0070F2;background:#EBF4FF">
+              <strong style="color:var(--sap-blue)">RISE with SAP</strong><br>
+              S/4HANA Cloud (PCE)<br>
+              <span style="font-size:10px;font-weight:400">中国核心 ERP</span>
+            </div>
+            <div class="arch-arrow">⟷</div>
+            <div class="arch-box green">SAP BTP China<br><span style="font-size:10px;font-weight:400">本地集成平台</span></div>
+            <div class="arch-arrow">⟷</div>
+            <div class="arch-box gold">SuccessFactors CN<br><span style="font-size:10px;font-weight:400">人力资源系统</span></div>
+          </div>
+          <div class="arch-line"></div>
+          <div class="arch-row">
+            <div class="arch-box orange">零售 POS / OMS<br><span style="font-size:10px;font-weight:400">天猫/京东/自营</span></div>
+            <div class="arch-arrow">⟷</div>
+            <div class="arch-box orange">WMS<br><span style="font-size:10px;font-weight:400">仓储管理系统</span></div>
+            <div class="arch-arrow">⟷</div>
+            <div class="arch-box grey">本地 MES / IoT<br><span style="font-size:10px;font-weight:400">工厂/生产系统</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;padding:10px 14px;background:white;border:1px solid var(--sap-border);border-radius:4px;font-size:11.5px;color:var(--sap-grey)">
+          📍 <strong>数据中心选项：</strong>北京、宁夏（AWS/AZR）、上海（阿里云/SAP CC/GDS）｜ 超算中心：Lenovo TruScale（PECDC）支持最高本地化
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="num">2</span>五种中国部署选项（从轻到重）</div>
+        <table class="sap-table">
+          <thead>
+            <tr><th>选项</th><th>超算平台</th><th>运维主体</th><th>适用场景</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Option 1</strong><br>本地数据驻留 (PCE)</td>
+              <td>Azure / AWS</td>
+              <td>SAP Global</td>
+              <td>基础合规要求</td>
+            </tr>
+            <tr>
+              <td><strong>Option 2</strong><br>中国超算（标准）</td>
+              <td>阿里云 / SAP CC</td>
+              <td>SAP Global+本地支持</td>
+              <td><span class="badge badge-blue">Adidas 推荐起点</span></td>
+            </tr>
+            <tr>
+              <td><strong>Option 3</strong><br>客户本地 DC</td>
+              <td>Lenovo TruScale</td>
+              <td>SAP Global</td>
+              <td>有本地 DC 的客户</td>
+            </tr>
+            <tr>
+              <td><strong>Option 4</strong><br>本地 DC + 本地运维</td>
+              <td>Lenovo PECDC</td>
+              <td>Lenovo L1/L2</td>
+              <td>高合规要求</td>
+            </tr>
+            <tr>
+              <td><strong>Option 5</strong><br>全本地化 (PECDC+)</td>
+              <td>Lenovo + IDC</td>
+              <td>Lenovo 全托管</td>
+              <td>最高数据主权要求</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="num">3</span>RISE 中国可用 SAP 解决方案矩阵</div>
+        <table class="sap-table">
+          <thead>
+            <tr><th>产品线</th><th>解决方案</th><th>境内 DC</th><th>超算平台</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>RISE</td><td>S/4HANA Cloud PCE</td><td>✅</td><td>AZR / AWS</td></tr>
+            <tr><td>RISE</td><td>S/4HANA Cloud Public</td><td>✅</td><td>阿里云 / SAP CC</td></tr>
+            <tr><td>HXM</td><td>SuccessFactors</td><td>✅</td><td>SAP CC</td></tr>
+            <tr><td>Ariba</td><td>采购云</td><td>✅</td><td>SAP CC</td></tr>
+            <tr><td>BTP</td><td>集成 / 分析平台</td><td>✅</td><td>阿里云 / SAP CC</td></tr>
+            <tr><td>Concur</td><td>费用报销</td><td>✅</td><td>AWS</td></tr>
+            <tr><td>DSC</td><td>IBP 供应链计划</td><td>✅</td><td>阿里云</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ TAB 3: 改造范围评估 ══════════════ -->
+  <div id="tab-scope" class="section">
+
+    <div class="section-intro">
+      ECC → RISE（S/4HANA Cloud）的改造范围评估分为三个维度：数据治理、系统架构分离、业务流程影响。SAP 提供标准化的三阶段评估方法论。
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="num">1</span>MNC ECC → RISE 改造范围评估方法（五步法）</div>
+      <ul class="step-list">
+        <li>
+          <div class="step-content">
+            <strong>定义策略选项 Define Strategy Options</strong>
+            <p>明确三种可选架构：① 全球单一实例 ② 强耦合中国实例 ③ 松耦合 2-Tier 架构。针对 Adidas 场景，重点评估选项 ② 和 ③</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <strong>确定评估维度 Define Evaluation Criteria</strong>
+            <p>七大维度加权评分：企业战略契合度 / 业务灵活性 / 法律合规风险 / 地缘政治风险 / 系统可维护性 / 长期运营成本 / 迁移成本与风险</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <strong>定性评估 Qualitative Evaluation</strong>
+            <p>逐一分析各选项在数据安全、运营连续性、业务流程影响等方面的表现，识别关键风险点</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <strong>定量评估 Quantitative Evaluation</strong>
+            <p>对业务流程（L3级）逐条评估影响：典型案例中 76 个 L3 流程中 32 个受影响，涉及 109 条数据流，需额外集成 11 个全球解决方案</p>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <strong>输出建议方案 Result &amp; Recommendation</strong>
+            <p>综合评分后输出最优架构建议，典型结论：<strong>2-Tier 松耦合架构</strong>得分最高，有效平衡合规风险与业务连续性</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="num">2</span>两种分离服务方式对比</div>
+        <div class="option-cards" style="grid-template-columns:1fr 1fr">
+          <div class="option-card recommended">
+            <div class="rec-badge">推荐</div>
+            <div class="option-num">Service 1</div>
+            <div class="option-title">Clone &amp; Delete<br><span style="font-size:11px;color:var(--sap-grey)">公司代码克隆删除法</span></div>
+            <ul class="option-items">
+              <li class="pro">周期：3–5 个月</li>
+              <li class="pro">工作量低，标准化高</li>
+              <li class="pro">团队小，成本可控</li>
+              <li class="pro">可先在测试环境验证</li>
+              <li class="con">数据选择灵活性较低</li>
+            </ul>
+          </div>
+          <div class="option-card">
+            <div class="option-num">Service 2</div>
+            <div class="option-title">Company Code Transfer<br><span style="font-size:11px;color:var(--sap-grey)">公司代码迁移法</span></div>
+            <ul class="option-items">
+              <li class="pro">数据选择高度定制化</li>
+              <li class="pro">技术停机时间最短</li>
+              <li class="pro">可与 S/4 升级同步</li>
+              <li class="con">周期：6–9 个月</li>
+              <li class="con">工作量大，成本较高</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="num">3</span>典型改造范围数据（参考案例）</div>
+        <div class="highlight-box">
+          <p><strong>某全球食品制造商（140+ 国家，全球单一 S/4HANA）</strong></p>
+        </div>
+        <table class="sap-table" style="margin-top:10px">
+          <tbody>
+            <tr><td>受影响 L3 业务流程</td><td><strong>32 / 76 个</strong></td></tr>
+            <tr><td>受影响数据流</td><td><strong>109 条</strong></td></tr>
+            <tr><td>需新建集成的全球系统</td><td><strong>11 个</strong></td></tr>
+            <tr><td>其中：需开发集成</td><td><strong>62 条数据流</strong></td></tr>
+            <tr><td>其中：人工替代方案</td><td><strong>26 条数据流</strong></td></tr>
+            <tr><td>其中：开放待定场景</td><td><strong>21 条数据流</strong></td></tr>
+            <tr><td>外部资源估算</td><td><strong>~1,500 人天</strong></td></tr>
+            <tr><td>内部资源估算</td><td><strong>~1,300 人天（最低）</strong></td></tr>
+            <tr><td>Stage 1 最短上线周期</td><td><strong>9 个月</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="num">4</span>三阶段评估服务时间线</div>
+      <div class="phase-row">
+        <div class="phase-item active">
+          <div class="phase-num">Phase I</div>
+          <div class="phase-title">初始评估</div>
+          <div class="phase-time">3–8 周</div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num">Phase II</div>
+          <div class="phase-title">方案准备</div>
+          <div class="phase-time">1–3 个月</div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-num">Phase III</div>
+          <div class="phase-title">实施落地</div>
+          <div class="phase-time">视范围而定</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:16px">
+        <div>
+          <div class="highlight-box">
+            <p><strong>Phase I 主要交付：</strong>现有架构分析 / 分离理由梳理 / 目标架构初步方案 / 实施路径建议</p>
+          </div>
+        </div>
+        <div>
+          <div class="highlight-box gold">
+            <p><strong>Phase II 主要交付：</strong>目标架构详细设计 / 数据验证要求 / 自定义代码影响分析 / 剥离方案测试</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ TAB 4: 周边系统集成 ══════════════ -->
+  <div id="tab-integration" class="section">
+
+    <div class="section-intro">
+      Adidas 中国现有零售 POS / OMS / WMS 等周边商业系统与 S/4HANA 的集成，是 RISE 落地成功的关键。SAP 建议遵循 Clean Core 集成原则，通过 BTP Integration Suite（中国境内实例）统一管理数据流。
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="num">1</span>周边系统集成架构概览</div>
+      <div class="arch-diagram">
+        <div style="text-align:center;margin-bottom:16px">
+          <div class="arch-box" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px">
+            <strong>RISE S/4HANA China (PCE)</strong>
+            <span style="font-size:10px;font-weight:400;color:var(--sap-grey)">核心 ERP</span>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:18px;color:var(--sap-grey);margin:4px 0">↕</div>
+        <div style="text-align:center;margin-bottom:16px">
+          <div class="arch-box green" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px">
+            <strong>SAP BTP Integration Suite（中国境内）</strong>
+            <span style="font-size:10px;font-weight:400">统一集成中间层 / Edge Integration Cell</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px">
+          <div style="text-align:center">
+            <div class="arch-box orange" style="margin:0 auto">零售 / POS / OMS<br><span style="font-size:10px;font-weight:400">天猫 / 京东 / 自营电商</span></div>
+            <div style="font-size:10px;color:var(--sap-grey);margin-top:6px">↕ 订单 / 库存 / 财务凭证</div>
+          </div>
+          <div style="text-align:center">
+            <div class="arch-box orange" style="margin:0 auto">WMS<br><span style="font-size:10px;font-weight:400">仓储管理系统</span></div>
+            <div style="font-size:10px;color:var(--sap-grey);margin-top:6px">↕ 入库 / 出库 / 库存同步</div>
+          </div>
+          <div style="text-align:center">
+            <div class="arch-box grey" style="margin:0 auto">其他本地系统<br><span style="font-size:10px;font-weight:400">MES / 支付 / 税务</span></div>
+            <div style="font-size:10px;color:var(--sap-grey);margin-top:6px">↕ 视具体场景定制</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="num">2</span>三类周边系统集成说明</div>
+      <div class="int-grid">
+        <div class="int-item">
+          <div class="int-item-title">
+            <span class="dot dot-blue"></span>零售 / OMS 集成
+          </div>
+          <p>
+            <strong>集成场景：</strong>电商平台订单（天猫/京东/抖音/自营）→ S/4 销售订单 / AR<br><br>
+            <strong>主要数据流：</strong><br>
+            · 订单创建与状态同步<br>
+            · 库存实时查询<br>
+            · 财务收款凭证生成<br>
+            · 退换货逆向流程<br><br>
+            <strong>集成方式：</strong>SAP BTP Integration Suite 标准 API + 中间件适配器
+          </p>
+        </div>
+        <div class="int-item">
+          <div class="int-item-title">
+            <span class="dot dot-green"></span>WMS 集成
+          </div>
+          <p>
+            <strong>集成场景：</strong>S/4 物料凭证 ↔ WMS 入库/出库指令，实现库存一致性<br><br>
+            <strong>主要数据流：</strong><br>
+            · 采购入库通知（GR）<br>
+            · 销售出库指令（GI）<br>
+            · 库存盘点差异同步<br>
+            · 物料主数据同步<br><br>
+            <strong>集成方式：</strong>标准 IDOC / REST API，可使用 Edge Integration Cell 降低延迟
+          </p>
+        </div>
+        <div class="int-item">
+          <div class="int-item-title">
+            <span class="dot dot-gold"></span>全球 ERP 松耦合集成
+          </div>
+          <p>
+            <strong>集成场景：</strong>中国 RISE 实例与全球 ECC/S/4 之间保持有限数据互通<br><br>
+            <strong>主要数据流：</strong><br>
+            · 财务汇总报告上报<br>
+            · 跨公司 PO / 内部结算<br>
+            · 主数据（物料/供应商）同步<br>
+            · 非敏感业务数据交换<br><br>
+            <strong>集成方式：</strong>Global Integration Suite + Local Integration Suite 双层架构
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="num">3</span>Clean Core 集成原则（SAP 推荐）</div>
+      <div class="grid-2">
+        <div>
+          <ul class="bullet-list">
+            <li>所有与 S/4HANA 的集成通过 <strong>BTP Integration Suite</strong> 统一管理，避免直接修改 S/4 核心代码</li>
+            <li>本地系统优先使用 <strong>Edge Integration Cell</strong>（中国境内部署），降低数据跨境风险</li>
+            <li>中国本地集成与全球集成逻辑分层管理，互不干扰</li>
+            <li>所有集成开发统一在 <strong>全球 DEV 系统</strong>中管理，本地系统仅存放本地化集成逻辑</li>
+          </ul>
+        </div>
+        <div>
+          <div class="highlight-box">
+            <p><strong>对 Adidas 的具体建议：</strong><br>
+            建议评估现有零售 OMS 与 WMS 系统的 API 开放能力，并确认是否已与其他系统有 SAP 集成经验。SAP 可提供标准的集成内容包（Integration Content）以加速对接，减少定制开发工作量。</p>
+          </div>
+          <div class="highlight-box gold">
+            <p><strong>注意事项：</strong>如客户使用非 SAP WMS（如曼哈顿、Infor 等），需评估接口标准化程度，可能需要额外的适配开发工作。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ TAB 5: 2-Tier 中国案例 ══════════════ -->
+  <div id="tab-cases" class="section">
+
+    <div class="section-intro">
+      以下为 SAP 服务过的跨国企业在中国实施 RISE with SAP + 2-Tier 架构的真实案例，涵盖快消、零售、制造等行业，与 Adidas 场景高度相关。
+    </div>
+
+    <!-- Case 1 -->
+    <div class="case-card">
+      <div class="case-header">
+        <div>
+          <div class="case-header-title">📦 案例一：全球食品制造企业 — 中国独立实例分离项目</div>
+          <div class="case-header-sub">行业：快消 / 食品制造｜规模：140+ 国家运营，全球单一 S/4HANA</div>
+        </div>
+        <span class="badge badge-green">已完成</span>
+      </div>
+      <div class="case-body">
+        <div class="grid-2">
+          <div>
+            <strong class="text-sm mb-8 text-blue">▸ 背景与挑战</strong>
+            <ul class="bullet-list" style="margin-top:8px">
+              <li>全球所有业务（含中国区）运行于单一 S/4HANA 实例</li>
+              <li>因地缘政治风险，需将中国区剥离为独立实例</li>
+              <li>不确定改造范围，CIO 无法做决策</li>
+              <li>需确保剥离后全球与中国业务连续性</li>
+            </ul>
+          </div>
+          <div>
+            <strong class="text-sm mb-8 text-blue">▸ SAP 解决方案</strong>
+            <ul class="bullet-list" style="margin-top:8px">
+              <li>采用<strong>集中式 + 松耦合架构</strong>（Centralized with Loosely Coupled）</li>
+              <li>使用 Clone &amp; Delete 方法（DMLT 公司代码克隆删除）建立中国实例</li>
+              <li>本地 + 全球双层 Integration Suite 管理数据流</li>
+              <li>Stage 1 <strong>9 个月内完成上线</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="highlight-box green" style="margin-top:16px">
+          <p><strong>关键成果：</strong>32 个受影响业务流程均制定缓解方案，109 条数据流中 62 条通过集成重建，建立了风险管理计划支持 CIO 决策，提供了全面变革管理指引</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 2 -->
+    <div class="case-card">
+      <div class="case-header">
+        <div>
+          <div class="case-header-title">💊 案例二：全球制药企业 — 中国数据合规评估</div>
+          <div class="case-header-sub">行业：生命科学 / 制药｜规模：10 年 S/4 转型计划，20+ ERP 实例</div>
+        </div>
+        <span class="badge badge-gold">评估阶段</span>
+      </div>
+      <div class="case-body">
+        <div class="grid-2">
+          <div>
+            <strong class="text-sm mb-8 text-blue">▸ 背景与挑战</strong>
+            <ul class="bullet-list" style="margin-top:8px">
+              <li>坚持"1 全球实例 + 1 流程体系"战略</li>
+              <li>强大的本地 IT / 安全 / 法务团队需独立分析</li>
+              <li>需深度评估 500+ 接口的跨境数据流</li>
+              <li>要保持与监管机构的持续沟通，同时制定 Plan B</li>
+            </ul>
+          </div>
+          <div>
+            <strong class="text-sm mb-8 text-blue">▸ 评估成果</strong>
+            <ul class="bullet-list" style="margin-top:8px">
+              <li>分析了 22+ 数字骨干系统 / 310+ 数据对象</li>
+              <li>梳理了 500+ 接口 / 6 种监管场景</li>
+              <li>识别 4–5 种 S/4HANA 实例选项</li>
+              <li>预计成本增加 <strong>30–70%</strong>，分离周期 <strong>6–9 个月</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:16px">
+          <p><strong>对 Adidas 的参考意义：</strong>该案例验证了在复杂全球模板下，中国实例分离在技术上是可行的，但需提前做详尽的数据对象分析和接口影响评估。建议 Adidas 从 Phase I 评估开始，3–8 周内完成范围摸底。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 3 -->
+    <div class="case-card">
+      <div class="case-header">
+        <div>
+          <div class="case-header-title">🏭 案例三：跨国消费品企业 — 中国独立实例决策框架</div>
+          <div class="case-header-sub">行业：消费品 / 宠物食品 / 零食｜模式：Option 3 推荐（最大灵活性）</div>
+        </div>
+        <span class="badge badge-blue">决策完成</span>
+      </div>
+      <div class="case-body">
+        <div class="grid-2">
+          <div>
+            <strong class="text-sm mb-8 text-blue">▸ 评估的三个选项</strong>
+            <ul class="bullet-list" style="margin-top:8px">
+              <li><strong>Option 1：</strong>沿用全球实例（得分 31/50，合规风险高）</li>
+              <li><strong>Option 2：</strong>中国独立分段实例（得分 33/50，成本最高）</li>
+              <li><strong>Option 3：</strong>单一中国实例内独立客户端（得分 35/50）<br>
+                <span style="color:var(--sap-blue);font-size:11px">→ <strong>最终推荐方案</strong>：灵活性最大，合规风险最低</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <strong class="text-sm mb-8 text-blue">▸ 关键决策维度（加权评分）</strong>
+            <table class="sap-table" style="margin-top:8px">
+              <thead><tr><th>维度</th><th>权重</th><th>Option3得分</th></tr></thead>
+              <tbody>
+                <tr><td>企业战略契合</td><td>×1</td><td>3</td></tr>
+                <tr><td>业务灵活性</td><td>×2</td><td>9</td></tr>
+                <tr><td>法律合规</td><td>×2</td><td>10</td></tr>
+                <tr><td>地缘政治风险</td><td>×2</td><td>6</td></tr>
+                <tr><td>长期成本</td><td>×1</td><td>4</td></tr>
+                <tr><td>迁移成本</td><td>×1</td><td>4</td></tr>
+                <tr><td><strong>总分（满分50）</strong></td><td></td><td><strong>35</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="highlight-box green" style="margin-top:16px">
+          <p><strong>Adidas 适用结论：</strong>参考该加权评分框架，Adidas 可快速识别 2-Tier 松耦合架构（对应 Option 3）在合规与灵活性维度的优势。建议复用该评分方法，结合 Adidas 具体权重偏好，在 Phase I 评估中输出决策建议。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="num">4</span>2-Tier RISE 中国实例 — 行业参考客户</div>
+      <table class="sap-table">
+        <thead>
+          <tr><th>客户</th><th>行业</th><th>架构模式</th><th>中国策略</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nestlé / Unilever</td>
+            <td>快消</td>
+            <td>Semi-Autonomous Hybrid</td>
+            <td>中国独立 S/4HANA 实例</td>
+          </tr>
+          <tr>
+            <td>L'Oreal / Richemont</td>
+            <td>时尚零售</td>
+            <td>Dedicated Chinese Instance</td>
+            <td>RISE 中国实例 + 本地零售集成</td>
+          </tr>
+          <tr>
+            <td>Siemens</td>
+            <td>工业制造</td>
+            <td>Dedicated Chinese Instance</td>
+            <td>中国独立 ERP + 全球财务汇总</td>
+          </tr>
+          <tr>
+            <td>Bosch / Hitachi</td>
+            <td>工业/电子</td>
+            <td>Hybrid (Global Finance + CN Ops)</td>
+            <td>全球财务保留，中国运营独立</td>
+          </tr>
+          <tr>
+            <td>Ford / Canon</td>
+            <td>汽车/消费电子</td>
+            <td>Dedicated Chinese Instance</td>
+            <td>中国独立实例，本地数据驻留</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>SAP Premium Engagement APAC</strong> | China Instance Strategy for MNCs | Prepared by Kai Jiang, Jan 2026<br>
+  SAP &amp; Customer Confidential — Not for Distribution
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
